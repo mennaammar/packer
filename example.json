@@ -1,0 +1,29 @@
+
+{
+   "variables": {
+      "aws_access_key": "xxxxxxxxxxxxxx",
+      "aws_secret_key": "xxxxxxxxxxxxxxxxxxxx"
+  },
+    "builders": [
+      {
+        "type": "amazon-ebs",
+        "access_key": "{{user `aws_access_key`}}",
+        "secret_key": "{{user `aws_secret_key`}}",
+        "region": "us-east-1",
+        "ami_name": "packer-ami-maf-{{timestamp}}",
+        "iam_instance_profile" : "packer-role-test",
+        "instance_type": "t2.micro",
+        "source_ami":"ami-09e67e426f25ce0d7",
+        "ssh_username": "ubuntu"
+        
+      }
+    ],
+    "provisioners": [
+      {
+        "type": "shell",
+        "scripts": [
+          "scripts/install-aws-cli.sh"
+        ]
+      }
+    ]
+  }
